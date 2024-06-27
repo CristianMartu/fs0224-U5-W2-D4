@@ -2,7 +2,7 @@ package cristianmartucci.U5_W2_D4.services;
 
 import cristianmartucci.U5_W2_D4.entities.Author;
 import cristianmartucci.U5_W2_D4.entities.Blog;
-import cristianmartucci.U5_W2_D4.entities.BlogPayload;
+import cristianmartucci.U5_W2_D4.payloads.BlogDTO;
 import cristianmartucci.U5_W2_D4.exceptions.NotFoundException;
 import cristianmartucci.U5_W2_D4.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class BlogService {
         return blogRepository.findAll(pageable);
     }
 
-    public Blog saveBlog(BlogPayload blogPayload){
+    public Blog saveBlog(BlogDTO blogPayload){
         Author author = authorService.findById(blogPayload.getAuthorId());
 
         Blog blog = new Blog(blogPayload.getCategoria(), blogPayload.getTitolo(), blogPayload.getCover(),
@@ -41,7 +41,7 @@ public class BlogService {
         return this.blogRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Blog updateBlog(UUID id, BlogPayload updateBlog){
+    public Blog updateBlog(UUID id, BlogDTO updateBlog){
         Blog blog = this.findById(id);
 
         blog.setCategoria(updateBlog.getCategoria());

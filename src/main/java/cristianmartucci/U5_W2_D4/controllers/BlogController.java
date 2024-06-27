@@ -1,7 +1,7 @@
 package cristianmartucci.U5_W2_D4.controllers;
 
 import cristianmartucci.U5_W2_D4.entities.Blog;
-import cristianmartucci.U5_W2_D4.entities.BlogPayload;
+import cristianmartucci.U5_W2_D4.payloads.BlogDTO;
 import cristianmartucci.U5_W2_D4.services.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class BlogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Blog saveBlog(@RequestBody BlogPayload blog){
+    private Blog saveBlog(@RequestBody BlogDTO blog){
         return this.blogService.saveBlog(blog);
     }
 
@@ -33,7 +33,7 @@ public class BlogController {
     }
 
     @PutMapping("/{blogId}")
-    private Blog updateBlog(@PathVariable UUID blogId, @RequestBody BlogPayload blog){
+    private Blog updateBlog(@PathVariable UUID blogId, @RequestBody BlogDTO blog){
         return this.blogService.updateBlog(blogId, blog);
     }
 

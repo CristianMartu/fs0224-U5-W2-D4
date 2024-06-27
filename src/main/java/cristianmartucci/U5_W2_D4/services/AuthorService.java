@@ -2,6 +2,7 @@ package cristianmartucci.U5_W2_D4.services;
 
 import cristianmartucci.U5_W2_D4.entities.Author;
 import cristianmartucci.U5_W2_D4.exceptions.NotFoundException;
+import cristianmartucci.U5_W2_D4.payloads.AuthorDTO;
 import cristianmartucci.U5_W2_D4.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class AuthorService {
         return authorRepository.findAll(pageable);
     }
 
-    public Author saveAuthor(Author author){
+    public Author saveAuthor(AuthorDTO author){
         author.setId(UUID.randomUUID());
         author.setAvatar("https://ui-avatars.com/api/?name=" + author.getNome() + "+" + author.getCognome());
         return this.authorRepository.save(author);
