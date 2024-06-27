@@ -1,5 +1,7 @@
 package cristianmartucci.U5_W2_D4.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import cristianmartucci.U5_W2_D4.entities.Author;
 import cristianmartucci.U5_W2_D4.exceptions.NotFoundException;
 import cristianmartucci.U5_W2_D4.payloads.AuthorDTO;
@@ -10,13 +12,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
 public class AuthorService {
     @Autowired
-    public AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
+    @Autowired
+    private Cloudinary cloudinary;
 
     public Page<Author> getAllAuthor(int pageNumber, int pageSize, String sortBy) {
         if (pageSize > 100) pageSize = 100;
@@ -48,6 +55,15 @@ public class AuthorService {
 
     public void deleteAuthor(UUID authorId){
         this.authorRepository.delete(this.findById(authorId));
+    }
 
+    public String uploadAvatar(MultipartFile file) throws IOException {
+        return (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+    }
+
+    public Author patchAuthor(UUID authorId, String url){
+        Author author = findById(authorId);
+        author.setAvatar(url);
+        return authorRepository.save(author);
     }
 }
