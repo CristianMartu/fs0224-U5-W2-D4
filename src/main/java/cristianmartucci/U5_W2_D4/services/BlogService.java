@@ -29,10 +29,10 @@ public class BlogService {
     }
 
     public Blog saveBlog(BlogDTO blogPayload){
-        Author author = authorService.findById(blogPayload.getAuthorId());
+        Author author = authorService.findById(blogPayload.authorId());
 
-        Blog blog = new Blog(blogPayload.getCategoria(), blogPayload.getTitolo(), blogPayload.getCover(),
-                blogPayload.getContenuto(), blogPayload.getTempoDiLettura(), author);
+        Blog blog = new Blog(blogPayload.categoria(), blogPayload.titolo(), blogPayload.cover(),
+                blogPayload.contenuto(), blogPayload.tempoDiLettura(), author);
 
         return this.blogRepository.save(blog);
     }
@@ -44,13 +44,13 @@ public class BlogService {
     public Blog updateBlog(UUID id, BlogDTO updateBlog){
         Blog blog = this.findById(id);
 
-        blog.setCategoria(updateBlog.getCategoria());
-        blog.setTitolo(updateBlog.getTitolo());
-        blog.setCover(updateBlog.getCover());
-        blog.setContenuto(updateBlog.getContenuto());
-        blog.setTempoDiLettura(updateBlog.getTempoDiLettura());
+        blog.setCategoria(updateBlog.categoria());
+        blog.setTitolo(updateBlog.titolo());
+        blog.setCover(updateBlog.cover());
+        blog.setContenuto(updateBlog.contenuto());
+        blog.setTempoDiLettura(updateBlog.tempoDiLettura());
 
-        blog.setAuthor(authorService.findById(updateBlog.getAuthorId()));
+        blog.setAuthor(authorService.findById(updateBlog.authorId()));
         
         return this.blogRepository.save(blog);
     }

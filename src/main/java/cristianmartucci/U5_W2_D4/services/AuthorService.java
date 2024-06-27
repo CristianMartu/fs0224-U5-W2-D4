@@ -25,9 +25,11 @@ public class AuthorService {
     }
 
     public Author saveAuthor(AuthorDTO author){
-        author.setId(UUID.randomUUID());
-        author.setAvatar("https://ui-avatars.com/api/?name=" + author.getNome() + "+" + author.getCognome());
-        return this.authorRepository.save(author);
+
+        Author newAuthor = new Author(author.nome(), author.cognome(), author.email(), author.dataDiNascita());
+
+        newAuthor.setAvatar("https://ui-avatars.com/api/?name=" + newAuthor.getNome() + "+" + newAuthor.getCognome());
+        return this.authorRepository.save(newAuthor);
     }
 
     public Author findById(UUID authorId){
